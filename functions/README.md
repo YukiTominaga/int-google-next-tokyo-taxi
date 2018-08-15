@@ -1,20 +1,20 @@
-## デプロイ手順
-※ Google Cloud SDKは既にインストールされている前提です。
-インストールがまだの方は[こちら](https://cloud.google.com/sdk/install)
+## Deploy
+※ You need to install Google Cloud SDK
+If you have not install SDK, Please install via [Here](https://cloud.google.com/sdk/install)
 
-Cloud Functionsのデプロイは現状betaなので別途インストールする
+You need to install gcloud component [beta](https://cloud.google.com/sdk/gcloud/reference/beta/?hl=en)
 ```
 $gcloud components install beta
 ```
-現在ログインしているアカウントで認証します
+Authenticate with your current Google Account
 ```
 $gcloud auth login
 ```
-functionのデプロイ先のプロジェクトを設定します
+Set your GCP Project to deploy function
 ```
 $gcloud config set project {YOUR_PROJECT_ID}
 ```
-functionをデプロイします(今回はPub/Subをトリガーに関数を実行するのでSubscribeするトピックを指定)
+Deploy your function(Please specify pub/sub topic name for subscribe)
 ```
 $gcloud beta functions deploy subscribe --region asia-northeast1 --runtime python37 --trigger-resource {YOUR_TOPIC_NAME} --trigger-event google.pubsub.topic.publish
 ```
