@@ -40,6 +40,7 @@ class MapByCarId(beam.DoFn):
 class ExtractStatusChangeFn(beam.DoFn):
 
     def process(self, element):
+        # タクシーのステータス変化を抽出（ウィンドウの端で起こった変化を取りこぼす可能性があるため注意）
         car_id, car_info_list = element
         car_info_list = sorted(car_info_list, key=lambda ci: ci["send_date"])
         previous = None
