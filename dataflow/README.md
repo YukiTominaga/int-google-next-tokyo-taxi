@@ -1,9 +1,14 @@
-# 測地系変換Dataflowパイプライン
+# 測地系変換/乗降データ抽出 Dataflow
 
 ## 概要
-PubSubにストリーミングされたタクシーデータ（日本測地系）を世界測地系に変換するためのDataflowパイプライン
 
-## デプロイ方法
+### 測地系変換(job.py)
+PubSubにストリーミングされたタクシーデータ（日本測地系）を世界測地系に変換してPubSubにWriteする
+
+### 乗降データ抽出(extract_status_change.py)
+PubSubにストリーミングされたタクシーデータ（日本測地系）を世界測地系に変換し、ステータスの変化があった場合はステータスのFromとToをタクシーデータに追記してPubSubにWriteする
+
+## デプロイ方法(共通)
 ```
 python job.py --project={project}
               --job_name={job_name}
