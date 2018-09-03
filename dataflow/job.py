@@ -28,6 +28,7 @@ class ConvertGeodeticSystemFn(beam.DoFn):
         element[u"lon_wgs"] = lon_wgs
         del element[u"lat"]
         del element[u"lon"]
+        element["geo_wgs"] = "POINT ({lon:.6f} {lat:.6f})".format(lat=lat_wgs, lon=lon_wgs)
         element = json.dumps(element)
         yield element
 
