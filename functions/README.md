@@ -16,5 +16,5 @@ $gcloud config set project {YOUR_PROJECT_ID}
 ```
 Deploy your function(Please specify pub/sub topic name for subscribe)
 ```
-$gcloud beta functions deploy subscribe --region asia-northeast1 --runtime python37 --trigger-resource {YOUR_TOPIC_NAME} --trigger-event google.pubsub.topic.publish
+$gcloud beta functions deploy subscribe --region us-central1 --runtime python37 --trigger-resource {YOUR_TOPIC_NAME} --trigger-event google.pubsub.topic.publish --memory 1024MB --timeout 540s
 ```
