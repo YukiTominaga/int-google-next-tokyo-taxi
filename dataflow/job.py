@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import logging
 import json
 import apache_beam as beam
 from apache_beam.options.pipeline_options import GoogleCloudOptions
@@ -32,13 +33,13 @@ class ConvertGeodeticSystemFn(beam.DoFn):
         element = json.dumps(element)
         yield element
 
+logging.getLogger().setLevel(logging.INFO)
 
 options = CustomOptions()
 
-with beam.Pipeline(options=options) as p:
-    input_messages = p | "ReadFromPubSub" >> ReadFromPubSub(topic=options.input)
-    converted_messages = input_messages | "ConvertGeodeticSystem" >> beam.ParDo(ConvertGeodeticSystemFn())
-    output_messages = converted_messages | "WriteToPubSub" >> WriteStringsToPubSub(options.output)
+p = beam.Pipeline(options=options)
+input_messages = p | "ReadFromPubSub" >> ReadFromPubSub(topic=options.input)
+converted_messages = input_messages | "ConvertGeodeticSystem" >> beam.ParDo(ConvertGeodeticSystemFn())
+output_messages = converted_messages | "WriteToPubSub" >> WriteStringsToPubSub(options.output)
+p.run()
 
-    result = p.run()
-    result.wait_until_finish()

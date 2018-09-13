@@ -11,7 +11,6 @@ PubSubにストリーミングされたタクシーデータ（日本測地系�
 ## デプロイ方法(共通)
 ```
 python job.py --project={project}
-              --job_name={job_name}
               --region={region}
               --staging_location={staging_location}
               --temp_location={temp_location}
@@ -20,6 +19,8 @@ python job.py --project={project}
               --runner=DataflowRunner
               --streaming
  ```
+## コマンド例
+python job.py --project=yutah-next-tokyo-taxi-dev --staging_location=gs://yutah-next-tokyo-taxi-dev.appspot.com/stg --temp_location=gs://yutah-next-tokyo-taxi-de v.appspot.com/tmp --input=projects/yutah-next-tokyo-taxi-dev/topics/jptx-upstream --output=projects/yutah-next-tokyo-taxi-dev/topics/tachibana-devnull --runner=DataflowRunner --streaming
 
 ### カスタムオプション
 |Option|説明|
