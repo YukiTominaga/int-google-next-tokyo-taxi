@@ -1,0 +1,2 @@
+google-cloud-firestore == 0.29.0
+hashids == 1.2.0
