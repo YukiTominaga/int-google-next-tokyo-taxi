@@ -1,0 +1,104 @@
+//////////////////////////////////////////////////
+// select
+//////////////////////////////////////////////////
+
+.select {
+  .select-ttl {
+    font-size: 48px;
+    height: 100px;
+    padding: 20px 50px;
+
+    button {
+      color: #fff;
+      font-size: 24px;
+      width: 60px;
+      margin: 0 0 0 15px;
+      padding: 5px 0;
+      border-radius: 2px;
+      background: #999;
+      vertical-align: middle;
+
+      white-space: pre-line;
+
+      &:hover {
+        opacity: 0.8;
+      }
+    }
+  }
+
+  .select-box {
+    display: flex;
+    flex-wrap: wrap;
+    height: calc(100% - 150px);
+    padding: 0 40px;
+
+    button {
+      width: calc(50% - 30px);
+      margin: 15px;
+      border-radius: 10px;
+      background: #fff;
+      box-shadow: 0 4px 4px 0 rgba(0,0,0,0.2);
+      overflow: hidden;
+      animation: select 0.3s both;
+      @keyframes select {
+        0% {
+          opacity: 0;
+          transform: translate(0, 100px);
+        }
+
+        100% {
+          opacity: 1;
+          transform: translate(0, 0);
+        }
+      }
+      @for $i from 1 through 4 {
+        &:nth-child(#{$i}) {
+          animation-delay: #{0.1 * $i}s;
+        }
+      }
+
+      &:hover {
+        box-shadow: 0 10px 10px 0 rgba(0,0,0,0.2);
+      }
+
+      div {
+        display: flex;
+        align-items: center;
+        font-size: 40px;
+        font-weight: bold;
+        width: 700px;
+        height: 180px;
+        line-height: 1.7;
+        margin: 0 auto;
+        padding: 0 0 0 210px;
+        background-repeat: no-repeat;
+        background-position: 0 50%;
+        text-align: left;
+        @include desktop {
+          font-size: 30px;
+          width: 560px;
+        }
+
+        .english & {
+          font-weight: 600;
+        }
+      }
+
+      &:nth-child(1) div {
+        background-image: url("../../../assets/images/ico-q-1.svg");
+      }
+
+      &:nth-child(2) div {
+        background-image: url("../../../assets/images/ico-q-2.svg");
+      }
+
+      &:nth-child(3) div {
+        background-image: url("../../../assets/images/ico-q-3.svg");
+      }
+
+      &:nth-child(4) div {
+        background-image: url("../../../assets/images/ico-q-4.svg");
+      }
+    }
+  }
+}

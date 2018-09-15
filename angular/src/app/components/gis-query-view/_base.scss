@@ -1,0 +1,129 @@
+//////////////////////////////////////////////////
+// base
+//////////////////////////////////////////////////
+@import url("https://fonts.googleapis.com/css?family=Roboto:100,300,400,500,700,900");
+$red: #ea4335;
+$blue: #4285f4;
+$yellow: #fbbc05;
+$green: #34a853;
+$blue-grey: #263238;
+$dark-yellow: #f9a825;
+@mixin desktop {
+  @media (max-width: (1680px)) {
+    @content;
+  }
+}
+
+body,
+html {
+  width: 100%;
+  height: 100%;
+  min-height: 600px;
+  overflow: hidden;
+}
+
+.wrap {
+  color: #333;
+  font-family: 'Roboto', 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', "游ゴシック体", "Yu Gothic", YuGothic, sans-serif;
+  font-weight: 500;
+  line-height: 1.5;
+  background: #eee;
+  -webkit-font-smoothing: antialiased;
+  -webkit-text-size-adjust: 100%;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+.wrap {
+  width: 100%;
+  height: 100%;
+}
+
+section {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+button {
+  font-size: inherit;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: all 0.3s;
+  -webkit-appearance: none;
+}
+@keyframes show {
+  0% {
+    opacity: 0;
+    transform: translate(0,100px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translate(0,0);
+  }
+}
+//////////////////////////////////////////////////
+// mode
+//////////////////////////////////////////////////
+
+.select {
+  // display: none;
+}
+
+.query {
+  //display: none;
+}
+
+.result {
+  //display: none;
+}
+
+.japanese {
+  .en {
+    display: none!important;
+  }
+}
+
+.english {
+  .jp {
+    display: none!important;
+  }
+}
+
+.query-1 {
+  .q-2,
+  .q-3,
+  .q-4 {
+    display: none!important;
+  }
+}
+
+.query-2 {
+  .q-1,
+  .q-3,
+  .q-4 {
+    display: none!important;
+  }
+}
+
+.query-3 {
+  .q-1,
+  .q-2,
+  .q-4 {
+    display: none!important;
+  }
+}
+
+.query-4 {
+  .q-1,
+  .q-2,
+  .q-3 {
+    display: none!important;
+  }
+}
