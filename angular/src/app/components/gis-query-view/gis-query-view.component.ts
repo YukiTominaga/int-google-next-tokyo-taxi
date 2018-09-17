@@ -75,7 +75,7 @@ WITH
     FROM \`next_taxi_demo.taxi_geodata\`
     WHERE send_date >= TIMESTAMP_SUB(CURRENT_TIMESTAMP(),INTERVAL 33 HOUR) GROUP BY car_id ) AS max
     ON origin.car_id = max.car_id AND origin.send_date = max.send_date
-    WHERE ST_DWithin(road.geo,origin.geo_wgs,20)
+    WHERE ST_DWithin(road.geo,origin.geo_wgs,20 AND origin.send_date >= TIMESTAMP_SUB(CURRENT_TIMESTAMP(),INTERVAL 33 HOUR)
     GROUP BY road.name, geo_id
   )
 SELECT IFNULL(cars_count.car_in_road,0) AS cars_count,master.name,master.geo_id, master.geo
