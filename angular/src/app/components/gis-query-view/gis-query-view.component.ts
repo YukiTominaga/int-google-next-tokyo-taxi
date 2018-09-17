@@ -100,6 +100,7 @@ FROM
 WHERE send_date >= TIMESTAMP_SUB(CURRENT_TIMESTAMP() ,INTERVAL 20 MINUTE)
 AND ST_intersects(geo_wgs, geo) = true
 AND status_from = 0 AND status_to IN UNNEST([2, 3, 4, 15, 22])
+AND city_id < 13200000000
 GROUP BY city_name
 ORDER BY count DESC
 LIMIT 4
@@ -112,6 +113,7 @@ FROM
 WHERE send_date >= TIMESTAMP_SUB(CURRENT_TIMESTAMP() ,INTERVAL 20 MINUTE)
 AND ST_intersects(geo_wgs, geo) = true
 AND status_from IN UNNEST([2, 3, 4, 15, 22]) AND status_to = 0
+AND city_id < 13200000000
 GROUP BY city_name
 ORDER BY count DESC
 LIMIT 4
