@@ -140,6 +140,7 @@ INNER JOIN (
   ) AS max
 ON origin.car_id = max.car_id AND origin.send_date = max.send_date
 WHERE ST_DWithin(city.geo , origin.geo_wgs, 10) AND origin.status=0
+AND origin.send_date >= TIMESTAMP_SUB(CURRENT_TIMESTAMP(),INTERVAL 33 HOUR)
 GROUP BY city.name, city.city_id
         `,
           datasetId: 'next_taxi_demo',
