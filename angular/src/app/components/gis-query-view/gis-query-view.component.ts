@@ -53,6 +53,8 @@ WHERE
       35.655352),
     origin.geo_wgs,
     1000)
+AND
+  origin.send_date >= TIMESTAMP_SUB(CURRENT_TIMESTAMP(),INTERVAL 33 HOUR)
         `,
           datasetId: 'next_taxi_demo',
           tableId: ['taxi_geodata'],
@@ -98,6 +100,7 @@ FROM
 WHERE send_date >= TIMESTAMP_SUB(CURRENT_TIMESTAMP() ,INTERVAL 20 MINUTE)
 AND ST_intersects(geo_wgs, geo) = true
 AND status_from = 0 AND status_to IN UNNEST([2, 3, 4, 15, 22])
+AND city_id < 13200000000
 GROUP BY city_name
 ORDER BY count DESC
 LIMIT 4
@@ -110,6 +113,7 @@ FROM
 WHERE send_date >= TIMESTAMP_SUB(CURRENT_TIMESTAMP() ,INTERVAL 20 MINUTE)
 AND ST_intersects(geo_wgs, geo) = true
 AND status_from IN UNNEST([2, 3, 4, 15, 22]) AND status_to = 0
+AND city_id < 13200000000
 GROUP BY city_name
 ORDER BY count DESC
 LIMIT 4
@@ -136,6 +140,7 @@ INNER JOIN (
   ) AS max
 ON origin.car_id = max.car_id AND origin.send_date = max.send_date
 WHERE ST_DWithin(city.geo , origin.geo_wgs, 10) AND origin.status=0
+AND origin.send_date >= TIMESTAMP_SUB(CURRENT_TIMESTAMP(),INTERVAL 33 HOUR)
 GROUP BY city.name, city.city_id
         `,
           datasetId: 'next_taxi_demo',
