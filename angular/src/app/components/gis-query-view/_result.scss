@@ -1,0 +1,271 @@
+//////////////////////////////////////////////////
+// result
+//////////////////////////////////////////////////
+
+.result {
+  .result-inner {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100%;
+    background: url("../../../assets/images/pic-bg-1.svg") center center no-repeat #eee;
+    animation: show 0.3s both;
+
+    .query-2 & {
+      background-image: url("../../../assets/images/pic-bg-2.svg");
+    }
+
+    .query-3 & {
+      background: #eee;
+    }
+
+    .query-4 & {
+      background-image: url("../../../assets/images/pic-bg-4.svg");
+    }
+
+    & > div {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      width: 50%;
+    }
+
+    .result-chart {
+      overflow: hidden;
+
+      .result-chart-count {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 20px 100px;
+        @include desktop {
+          padding: 20px;
+        }
+
+        .query-3 & {
+          display: none;
+        }
+
+        i {
+          display: block;
+          background: url("../../../assets/images/ico-car-1.svg") center center no-repeat;
+          background-size: cover;
+          animation: show 0.3s both;
+
+          .query-2 & {
+            background-image: url("../../../assets/images/ico-car-2.svg");
+          }
+
+          .query-3 & {
+            background: none;
+          }
+
+          .query-4 & {
+            background-image: url("../../../assets/images/ico-car-4.svg");
+          }
+        }
+        @for $i from 0 through 200 {
+          &.count-#{$i} {
+            $size: 40;
+            $margin: 10;
+            @if $i < 50 {
+              $size: 80;
+              $margin: 20;
+            } @else
+            if $i < 100 {
+              $size: 60;
+              $margin: 15;
+            }
+
+            i {
+              width: #{$size}px;
+              height: #{$size}px;
+              margin: #{$margin}px 0;
+            }
+
+            i:nth-child(n + #{$i+1}) {
+              display: none;
+            }
+          }
+
+          i:nth-child(#{$i}) {
+            animation-delay: #{0.03 * $i}s;
+          }
+        }
+      }
+
+      .result-chart-bar {
+        font-size: 30px;
+        font-weight: bold;
+        width: 750px;
+        margin: 10px 0;
+        padding: 40px 60px;
+        background: #fff;
+        @include desktop {
+          width: 620px;
+          padding: 30px;
+        }
+
+        .query-1 &,
+        .query-2 &,
+        .query-4 & {
+          display: none;
+        }
+
+        .english & {
+          font-weight: 600;
+        }
+
+        dl {
+          height: 60px;
+          line-height: 60px;
+
+          &:nth-of-type(1) {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: solid 4px #ddd;
+          }
+          @for $i from 1 through 4 {
+            &:nth-of-type(#{$i}) i {
+              animation-delay: #{0.3 * $i}s;
+            }
+          }
+        }
+
+        dt {
+          float: left;
+          width: 160px;
+        }
+
+        dd {
+          float: left;
+          width: 270px;
+
+          &:last-child {
+            float: right;
+            color: $dark-yellow;
+            width: auto;
+            text-align: right;
+          }
+
+          i {
+            display: inline-block;
+            height: 36px;
+            background: $yellow;
+            vertical-align: middle;
+            transform-origin: top left;
+            animation: bar 0.5s both;
+            @keyframes bar {
+              0% {
+                transform: scale(0,1);
+              }
+
+              100% {
+                transform: scale(1,1);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .result-txt {
+      align-items: flex-start;
+
+      .result-txt-txt {
+        font-size: 60px;
+        font-weight: bold;
+        line-height: 1.2;
+        @include desktop {
+          font-size: 48px;
+        }
+
+        strong {
+          color: $red;
+          font-size: 96px;
+
+          .query-2 & {
+            color: $blue;
+          }
+
+          .query-3 & {
+            color: $yellow;
+          }
+
+          .query-4 & {
+            color: $green;
+          }
+        }
+      }
+
+      .result-txt-box {
+        color: #fff;
+        width: 700px;
+        margin: 40px 0;
+        padding: 10px 30px;
+        background: $blue-grey;
+        @include desktop {
+          width: 600px;
+        }
+
+        dl {
+          font-size: 24px;
+          height: 70px;
+          line-height: 70px;
+          border-bottom: solid 1px rgba(255,255,255,0.1);
+
+          &:last-child {
+            border: none;
+          }
+        }
+
+        dt {
+          float: left;
+          font-weight: bold;
+
+          .english & {
+            font-weight: 500;
+          }
+        }
+
+        dd {
+          float: right;
+        }
+      }
+    }
+
+    .result-back {
+      position: absolute;
+      bottom: 50px;
+      right: 50px;
+      color: #fff;
+      font-size: 36px;
+      font-weight: bold;
+      width: 240px;
+      height: 80px;
+      padding-left: 40px;
+      border-radius: 40px;
+      background: url("../../../assets/images/ico-back.svg") 40px 50% no-repeat $red;
+
+      .query-2 & {
+        background-color: $blue;
+      }
+
+      .query-3 & {
+        background-color: $yellow;
+      }
+
+      .query-4 & {
+        background-color: $green;
+      }
+
+      .english & {
+        font-weight: 500;
+      }
+
+      &:hover {
+        box-shadow: 0 10px 10px 0 rgba(0,0,0,0.2);
+      }
+    }
+  }
+}

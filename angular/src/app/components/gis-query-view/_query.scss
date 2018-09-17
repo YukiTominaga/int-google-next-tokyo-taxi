@@ -1,0 +1,267 @@
+//////////////////////////////////////////////////
+// showQuery
+//////////////////////////////////////////////////
+
+.query {
+  .query-inner {
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100%;
+    animation: show 0.3s both;
+
+    .query-txt {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      width: 50%;
+      height: calc(100% - 120px);
+      background: $blue-grey;
+      overflow: hidden;
+
+      > div {
+        width: 85%;
+      }
+
+      .query-txt-ttl {
+        font-size: 36px;
+        padding-bottom: 10px;
+        margin-bottom: 20px;
+        border-bottom: solid 1px rgba(255,255,255,0.1);
+      }
+
+      .query-txt-q {
+        position: relative;
+        white-space: pre-wrap;
+        font-size: 20px;
+        line-height: 28px;
+        @include desktop {
+          font-size: 16px;
+          line-height: 24px;
+
+          .query-mask i {
+            height: 24px;
+          }
+        }
+
+        .query-mask {
+          position: absolute;
+          top: 0;
+          left: 0;
+          width: 100%;
+
+          i {
+            display: block;
+            width: 100%;
+            height: 36px;
+            background: $blue-grey;
+            transform-origin: top right;
+            animation: mask 4s both infinite;
+            @for $i from 1 through 30 {
+              &:nth-child(#{$i}) {
+                animation-delay: #{0.1 * $i}s;
+              }
+            }
+            @keyframes mask {
+              0% {
+                transform: scale(1,1);
+              }
+
+              20% {
+                transform: scale(0,1);
+              }
+
+              80% {
+                width: 100%;
+                transform: scale(0,1);
+              }
+
+              80.1% {
+                width: 0;
+                transform: scale(1,1);
+              }
+
+              100% {
+                width: 100%;
+                transform: scale(1,1);
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .query-map {
+      width: 50%;
+      height: calc(100% - 120px);
+      background: center center url("../../../assets/images/pic-map-1.jpg") no-repeat #eee;
+
+      .query-2 & {
+        background-image: url("../../../assets/images/pic-map-2.jpg");
+      }
+
+      .query-3 & {
+        background-image: url("../../../assets/images/pic-map-3.jpg");
+      }
+
+      .query-4 & {
+        background-image: url("../../../assets/images/pic-map-4.jpg");
+      }
+    }
+
+    .query-map {
+      position: relative;
+      overflow: hidden;
+
+      svg {
+        position: absolute;
+        top: -100%;
+        left: -100%;
+        right: -100%;
+        bottom: -100%;
+        margin: auto;
+        width: 960px;
+        height: 960px;
+
+        &.query-polygon circle,
+        &.query-polygon path,
+        &.query-polygon polygon {
+          fill: $red;
+          fill-opacity: 0.2;
+          stroke: $red;
+          stroke-width: 20;
+          stroke-linecap: round;
+          stroke-miterlimit: 10;
+          stroke-dasharray: 2000;
+          stroke-dashoffset: 2000;
+          animation: polygon 3s both infinite;
+
+          .query-2 & {
+            fill: transparent;
+            stroke: $blue;
+            stroke-width: 30;
+          }
+
+          .query-3 & {
+            fill: $yellow;
+            stroke: $yellow;
+            stroke-width: 10;
+            stroke-dasharray: 3000;
+            stroke-dashoffset: 3000;
+          }
+
+          .query-4 & {
+            fill: $green;
+            stroke: $green;
+          }
+        }
+        @keyframes polygon {
+          0% {
+            fill-opacity: 0;
+            stroke-dashoffset: 2000;
+          }
+
+          50% {
+            fill-opacity: 0.2;
+            stroke-dashoffset: 0;
+          }
+
+          90% {
+            opacity: 1;
+            fill-opacity: 0.2;
+            stroke-dashoffset: 0;
+          }
+
+          100% {
+            opacity: 0;
+            fill-opacity: 0.2;
+            stroke-dashoffset: 0;
+          }
+        }
+
+        &.query-dot circle {
+          fill: $red;
+          transform-origin: center;
+          animation: dot 3s both infinite;
+          @for $i from 1 through 30 {
+            &:nth-child(#{$i}) {
+              animation-delay: #{0.05 * $i}s;
+            }
+          }
+
+          .query-2 & {
+            fill: #fff;
+            fill-opacity: 0.8;
+          }
+
+          .query-3 & {
+            fill: $yellow;
+          }
+
+          .query-4 & {
+            fill: $green;
+          }
+        }
+        @keyframes dot {
+          0% {
+            opacity: 0;
+          }
+
+          10% {
+            opacity: 0;
+            transform: scale(0.95);
+          }
+
+          20% {
+            opacity: 1;
+            transform: scale(1);
+          }
+
+          50% {
+            opacity: 1;
+            transform: scale(1);
+          }
+
+          60% {
+            opacity: 0;
+            transform: scale(1.05);
+          }
+
+          100% {
+            opacity: 0;
+          }
+        }
+      }
+    }
+
+    .query-msg {
+      position: relative;
+      width: 100%;
+      height: 120px;
+      color: #fff;
+      font-size: 30px;
+      font-weight: bold;
+      line-height: 120px;
+      text-align: center;
+      background: $red;
+
+      .query-2 & {
+        background-color: $blue;
+      }
+
+      .query-3 & {
+        background-color: $yellow;
+      }
+
+      .query-4 & {
+        background-color: $green;
+      }
+
+      .english & {
+        font-weight: 500;
+      }
+    }
+  }
+}
