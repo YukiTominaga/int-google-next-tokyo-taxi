@@ -53,6 +53,8 @@ WHERE
       35.655352),
     origin.geo_wgs,
     1000)
+AND
+  origin.send_date >= TIMESTAMP_SUB(CURRENT_TIMESTAMP(),INTERVAL 33 HOUR)
         `,
           datasetId: 'next_taxi_demo',
           tableId: ['taxi_geodata'],
