@@ -42,7 +42,7 @@ INNER JOIN (
   FROM
     \`next_taxi_demo.taxi_geodata\`
   WHERE
-    send_date >= TIMESTAMP_SUB(CURRENT_TIMESTAMP(),INTERVAL 33 HOUR)
+    send_date >= TIMESTAMP_ADD(CURRENT_TIMESTAMP(),INTERVAL 8 HOUR)
   GROUP BY
     car_id) AS max
 ON
@@ -54,7 +54,7 @@ WHERE
     origin.geo_wgs,
     1000)
 AND
-  origin.send_date >= TIMESTAMP_SUB(CURRENT_TIMESTAMP(),INTERVAL 33 HOUR)
+  origin.send_date >= TIMESTAMP_ADD(CURRENT_TIMESTAMP(),INTERVAL 8 HOUR)
         `,
           datasetId: 'next_taxi_demo',
           tableId: ['taxi_geodata'],
@@ -73,9 +73,9 @@ WITH
     WHERE geo_id=1) AS road
     INNER JOIN (SELECT car_id,MAX(send_date) AS send_date
     FROM \`next_taxi_demo.taxi_geodata\`
-    WHERE send_date >= TIMESTAMP_SUB(CURRENT_TIMESTAMP(),INTERVAL 33 HOUR) GROUP BY car_id ) AS max
+    WHERE send_date >= TIMESTAMP_ADD(CURRENT_TIMESTAMP(),INTERVAL 8 HOUR) GROUP BY car_id ) AS max
     ON origin.car_id = max.car_id AND origin.send_date = max.send_date
-    WHERE ST_DWithin(road.geo,origin.geo_wgs,20 AND origin.send_date >= TIMESTAMP_SUB(CURRENT_TIMESTAMP(),INTERVAL 33 HOUR)
+    WHERE ST_DWithin(road.geo,origin.geo_wgs,20) AND origin.send_date >= TIMESTAMP_ADD(CURRENT_TIMESTAMP(),INTERVAL 8 HOUR)
     GROUP BY road.name, geo_id
   )
 SELECT IFNULL(cars_count.car_in_road,0) AS cars_count,master.name,master.geo_id, master.geo
@@ -135,12 +135,12 @@ INNER JOIN (
   SELECT car_id, MAX(send_date) as send_date
   FROM \`next_taxi_demo.taxi_geodata\`
   WHERE
-    send_date >= TIMESTAMP_SUB(CURRENT_TIMESTAMP(),INTERVAL 33 HOUR)
+    send_date >= TIMESTAMP_ADD(CURRENT_TIMESTAMP(),INTERVAL 8 HOUR)
   GROUP BY car_id
   ) AS max
 ON origin.car_id = max.car_id AND origin.send_date = max.send_date
 WHERE ST_DWithin(city.geo , origin.geo_wgs, 10) AND origin.status=0
-AND origin.send_date >= TIMESTAMP_SUB(CURRENT_TIMESTAMP(),INTERVAL 33 HOUR)
+AND origin.send_date >= TIMESTAMP_ADD(CURRENT_TIMESTAMP(),INTERVAL 8 HOUR)
 GROUP BY city.name, city.city_id
         `,
           datasetId: 'next_taxi_demo',
