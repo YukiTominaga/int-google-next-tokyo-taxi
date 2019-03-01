@@ -46,7 +46,7 @@ public class BQTask implements Runnable {
      * @throws InterruptedException
      */
     public TableResult getCarData(String queryStr) throws InterruptedException {
-        System.out.println("query => " + queryStr);
+        System.out.println("queryStr:" + queryStr);
         QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(queryStr).setUseLegacySql(false).build();
 
         // Create a job ID so that we can safely retry.
