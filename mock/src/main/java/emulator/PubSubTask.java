@@ -13,7 +13,10 @@ import com.google.api.core.ApiFutureCallback;
 import com.google.api.core.ApiFutures;
 import com.google.api.gax.rpc.ApiException;
 import com.google.cloud.pubsub.v1.Publisher;
+import com.google.gson.FieldNamingPolicy;
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.LongSerializationPolicy;
 import com.google.protobuf.ByteString;
 import com.google.pubsub.v1.ProjectTopicName;
 import com.google.pubsub.v1.PubsubMessage;
@@ -41,14 +44,18 @@ public class PubSubTask implements Runnable {
       System.out.println("データ数: " + Emulator.cars.size());
 
       for (CarInfo car : Emulator.cars) {
-        LocalDateTime date = LocalDateTime.ofInstant(Instant.ofEpochMilli(car.getSendDate()), ZoneId.systemDefault());
+        LocalDateTime date = LocalDateTime.ofInstant(Instant.ofEpochMilli(car.getSendDateLong()),
+            ZoneId.systemDefault());
         String sendDateStr = dtf.format(date);
 
         // Skip if send_date is in the future
         if (sendDateStr.compareTo(nowStr) > 0) {
           continue;
         }
-        String json = new Gson().toJson(car);
+
+        // 先の
+        String json = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
+            .setLongSerializationPolicy(LongSerializationPolicy.STRING).create().toJson(car);
         ByteString.copyFrom(json, "utf-8");
         PubSubTask.publish(ByteString.copyFrom(json, "utf-8"));
         // remove data from list.

@@ -12,6 +12,7 @@ import emulator.model.CarInfo;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Collections;
 import java.util.Queue;
 import java.util.UUID;
 
@@ -31,6 +32,7 @@ public class BQTask implements Runnable {
             Queue<CarInfo> cars = CarInfo.convert(result.iterateAll());
             System.out.println("車体データの数: " + cars.size());
             Emulator.cars.addAll(cars);
+            // Collections.addAll(Emulator.cars, cars);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
@@ -44,6 +46,7 @@ public class BQTask implements Runnable {
      * @throws InterruptedException
      */
     public TableResult getCarData(String queryStr) throws InterruptedException {
+        System.out.println("query => " + queryStr);
         QueryJobConfiguration queryConfig = QueryJobConfiguration.newBuilder(queryStr).setUseLegacySql(false).build();
 
         // Create a job ID so that we can safely retry.
@@ -78,11 +81,12 @@ public class BQTask implements Runnable {
         String current_time_str = "DATETIME(2019, 01, 01, " + now_time_str[0] + ", " + now_time_str[1] + ", "
                 + now_time_str[2] + ")";
 
-        return "SELECT" + " origin.car_id, driver_id, direction, speed, origin.send_date, status" + " FROM `"
-                + System.getenv("BQ_DATASET_NAME") + "." + System.getenv("BQ_TABLE_NAME") + "` AS origin" + " WHERE"
-                + " TIMESTAMP(" + current_time_str + ", 'Asia/Tokyo') <= TIMESTAMP(DATETIME(origin.send_date)) AND"
-                + " TIMESTAMP(DATETIME_ADD(" + current_time_str
-                + ", INTERVAL 10 MINUTE),'Asia/Tokyo') >= TIMESTAMP(DATETIME(origin.send_date))"
+        return "SELECT"
+                + " origin.car_id, driver_id, direction, speed, origin.send_date, status, origin.lat, origin.lon"
+                + " FROM `" + System.getenv("BQ_DATASET_NAME") + "." + System.getenv("BQ_TABLE_NAME") + "` AS origin"
+                + " WHERE" + " TIMESTAMP(" + current_time_str
+                + ", 'Asia/Tokyo') <= TIMESTAMP(DATETIME(origin.send_date)) AND" + " TIMESTAMP(DATETIME_ADD("
+                + current_time_str + ", INTERVAL 10 MINUTE),'Asia/Tokyo') >= TIMESTAMP(DATETIME(origin.send_date))"
                 + " ORDER BY origin.send_date ASC";
     }
 

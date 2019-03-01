@@ -11,6 +11,8 @@ def subscribe(data, context):
 
      # car_idのハッシュ化
     hashed_car_id = Hashids(min_length=8).encode(car_info_json['car_id'])
+    print("car_id:", car_info_json['car_id'])
+    print("hashed_car_id:", hashed_car_id)
     # 日付をDate and time型に変換
     car_info_json['send_date'] = dt.strptime(car_info_json['send_date'], '%Y-%m-%d %H:%M:%S')
     # lat, lonをGeo Point型に変換
