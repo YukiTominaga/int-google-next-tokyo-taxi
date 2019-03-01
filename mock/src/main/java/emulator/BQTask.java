@@ -11,8 +11,8 @@ import com.google.cloud.bigquery.TableResult;
 import emulator.model.CarInfo;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Collections;
 import java.util.Queue;
 import java.util.UUID;
 
@@ -75,7 +75,7 @@ public class BQTask implements Runnable {
      * @return queryString
      */
     public String createQuery() {
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now = LocalDateTime.now(ZoneId.of("Asia/Tokyo"));
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("HH:mm:ss");
         String[] now_time_str = now.format(dtf).split(":");
         String current_time_str = "DATETIME(2019, 01, 01, " + now_time_str[0] + ", " + now_time_str[1] + ", "
