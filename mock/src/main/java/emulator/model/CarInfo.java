@@ -1,5 +1,8 @@
 package emulator.model;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Queue;
@@ -17,6 +20,8 @@ public class CarInfo {
   private Object sendDate = null;
   private Long sendDateLong = null;
   private Object status = null;
+  private Double lat = null;
+  private Double lon = null;
   private Double latJp = null;
   private Double lonJp = null;
   private Double latWgs = null;
@@ -140,6 +145,34 @@ public class CarInfo {
     this.lonJp = lonJp;
   }
 
+  /**
+   * @return the lat
+   */
+  public Double getLat() {
+    return lat;
+  }
+
+  /**
+   * @param lat the lat to set
+   */
+  public void setLat(Double lat) {
+    this.lat = lat;
+  }
+
+  /**
+   * @return the lon
+   */
+  public Double getLon() {
+    return lon;
+  }
+
+  /**
+   * @param lon the lon to set
+   */
+  public void setLon(Double lon) {
+    this.lon = lon;
+  }
+
   public static Queue<CarInfo> convert(Iterable<FieldValueList> rows) {
     Queue<CarInfo> cars = new ConcurrentLinkedQueue<>();
 
@@ -151,6 +184,8 @@ public class CarInfo {
       car.setSendDateLong(row.get("send_date").getTimestampValue() / 1000);
       car.setSendDate(DateUtil.getDateTimeStr(car.getSendDateLong()));
       car.setStatus(row.get("status").getNumericValue());
+      car.setLat(row.get("lat").getDoubleValue());
+      car.setLon(row.get("lon").getDoubleValue());
       car.setLatJp(row.get("lat").getDoubleValue());
       car.setLonJp(row.get("lon").getDoubleValue());
 
@@ -168,6 +203,30 @@ public class CarInfo {
     map.put("lat", lat - (lat * 0.00010695) + (lon * 0.000017464) + 0.0046017);
     map.put("lon", lon - (lat * 0.000046038) - (lon * 0.000083043) + 0.01004);
     return map;
+  }
 
+  public static CarInfo cvt2CurrentTime(CarInfo car) {
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    Date dateFrom = null;
+    Date dateTo = null;
+    Date now = new Date(); // 現在時刻
+    SimpleDateFormat fmt = new SimpleDateFormat("yyyy/MM/dd 00:00:00");
+    SimpleDateFormat outfmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+    try {
+      dateFrom = sdf.parse("2019/01/01 00:00:00");
+      dateTo = sdf.parse(fmt.format(now));
+    } catch (ParseException e) {
+      e.printStackTrace();
+    }
+    long dateTimeTo = dateTo.getTime();
+    long dateTimeFrom = dateFrom.getTime();
+
+    // 差分の時間を算出します。
+    long dayDiff = (dateTimeTo - dateTimeFrom);
+
+    car.setSendDateLong(car.getSendDateLong() + dayDiff);
+    car.setSendDate(outfmt.format(new Date(car.getSendDateLong())));
+    return car;
   }
 }

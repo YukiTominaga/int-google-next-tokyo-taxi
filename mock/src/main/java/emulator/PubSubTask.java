@@ -53,9 +53,12 @@ public class PubSubTask implements Runnable {
           continue;
         }
 
-        // 先の
+        // 時刻を現在の時刻に直す
+        car = CarInfo.cvt2CurrentTime(car);
+
         String json = new GsonBuilder().setFieldNamingPolicy(FieldNamingPolicy.LOWER_CASE_WITH_UNDERSCORES)
             .setLongSerializationPolicy(LongSerializationPolicy.STRING).create().toJson(car);
+
         ByteString.copyFrom(json, "utf-8");
         PubSubTask.publish(ByteString.copyFrom(json, "utf-8"));
         // remove data from list.
