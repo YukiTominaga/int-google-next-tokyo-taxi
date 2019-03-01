@@ -1,7 +1,6 @@
 package emulator;
 
 import java.io.IOException;
-import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -11,7 +10,7 @@ import emulator.model.CarInfo;
 
 public class Emulator {
 
-  public static Queue<CarInfo> cars = new ConcurrentLinkedQueue<>();
+  public static ConcurrentLinkedQueue<CarInfo> cars = new ConcurrentLinkedQueue<>();
 
   public static void main(String... args) throws Exception {
     execute();

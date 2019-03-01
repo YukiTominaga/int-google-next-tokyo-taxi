@@ -33,28 +33,17 @@ public class DateUtil {
     }
 
     /**
-     * 現在時刻との比較を行う
-     * 
-     * @param dateTime
-     * @return true: dateTimeが現在時刻よりも未来 false: dateTimeが現在時刻よりも過去
+     * Get a datetime string like "yyyy-MM-dd hh:mm:ss"
      */
-    public static boolean compare(Long dateTime) {
-        SimpleDateFormat sdFormat = new SimpleDateFormat("hh:mm:ss");
+    public static String getDateTimeStr(Long timestamp) {
+        SimpleDateFormat sdFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         sdFormat.setTimeZone(TimeZone.getTimeZone("Asia/Tokyo"));
-
-        String s1 = sdFormat.format(dateTime);
-        String s2 = sdFormat.format(System.currentTimeMillis());
-
-        try {
-            Date d1 = sdFormat.parse(s1);
-            Date d2 = sdFormat.parse(s2);
-            return d1.compareTo(d2) == 1;
-        } catch (ParseException e) {
-            e.printStackTrace();
-            return false;
-        }
+        return sdFormat.format(timestamp);
     }
 
+    /**
+     * Get a time string like "hh:mm:ss"
+     */
     public static String getTimeStr(Long timestamp) {
         SimpleDateFormat sdFormat = new SimpleDateFormat("hh:mm:ss");
         sdFormat.setTimeZone(TimeZone.getTimeZone("Asia/Tokyo"));
