@@ -16,7 +16,7 @@ import { GisQueryViewComponent } from './components/gis-query-view/gis-query-vie
 import { TaxiMapComponent } from './components/taxi-map/taxi-map.component';
 import { LoginComponent } from './components/login/login.component';
 
-import { } from '@types/googlemaps';
+import { } from 'googlemaps';
 
 @NgModule({
   declarations: [
