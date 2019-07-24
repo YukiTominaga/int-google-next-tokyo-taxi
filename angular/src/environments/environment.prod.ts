@@ -1,15 +1,16 @@
 export const environment = {
   production: true,
   firebase: {
-    apiKey: 'YOUR_API_KEY',
-    authDomain: 'YOUR_FIREBASE_PROJECT_ID.firebaseapp.com',
-    databaseURL: 'https://YOUR_FIREBASE_PROJECT_ID.firebaseio.com',
-    projectId: 'YOUR_FIREBASE_PROJECT_ID',
-    storageBucket: 'YOUR_FIREBASE_PROJECT_ID.appspot.com',
-    messagingSenderId: 'YOUR_MESSAGING_SENDER_ID'
+    apiKey: 'AIzaSyAYyMXF7-4uqDeYUQVGzT06MHn6vEQx_j8',
+    authDomain: 'ca-next-tokyo-taxi.firebaseapp.com',
+    databaseURL: 'https://ca-next-tokyo-taxi.firebaseio.com',
+    projectId: 'ca-next-tokyo-taxi',
+    storageBucket: 'ca-next-tokyo-taxi.appspot.com',
+    messagingSenderId: '742474698382',
+    appId: '1:742474698382:web:9f4cec76f929cc98'
   },
   google: {
-    clientId: 'CLIENT_ID',
+    clientId: '742474698382-cuifs2l08rrilrpradtjuqmm4mp7u2nr.apps.googleusercontent.com',
     scope: [
       'https://www.googleapis.com/auth/bigquery',
       'https://www.googleapis.com/auth/cloud-platform',
