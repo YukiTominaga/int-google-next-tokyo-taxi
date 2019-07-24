@@ -14,9 +14,11 @@ import { ProjectIAMMember } from './components/ProjectIAMMember';
 
 const config = new pulumi.Config("gcp");
 const projectId = config.get("project") as string;
+console.log("作成先のGCPプロジェクト: ", projectId);
 
 // AppEngine
-const appengine = new AppEngine("next-tokyo-taxi", projectId, "asia-northeast1");
+// AppEngineは毎回作成しようとしてエラーになって面倒なのでpulumi管理の対象外としたい
+// const appengine = new AppEngine("next-tokyo-taxi", projectId, "asia-northeast1");
 
 // BigQuery
 const bqDataset = new BigQueryDataset("next_taxi_demo", "next_taxi_demo");
@@ -45,6 +47,7 @@ const services = new gcp.projects.Services("project", {
     "cloudbuild.googleapis.com",
     "cloudfunctions.googleapis.com",
     "compute.googleapis.com",
+    "containerregistry.googleapis.com",
     "firestore.googleapis.com",
     "iam.googleapis.com",
     "identitytoolkit.googleapis.com",
@@ -60,5 +63,5 @@ services.id.apply(async id => {
   const project = await gcp.organizations.getProject({ projectId: projectId });
   const projectNumber = project.number;
   new ProjectIAMMember("cloudbuildKeyCreator", `serviceAccount:${projectNumber}@cloudbuild.gserviceaccount.com`, "roles/iam.serviceAccountKeyAdmin");
-  new ProjectIAMMember("cloudbuildKeyCreator", `serviceAccount:${projectNumber}@cloudbuild.gserviceaccount.com`, "roles/firebase.admin");
+  new ProjectIAMMember("cloudbuildFirebaseAdmin", `serviceAccount:${projectNumber}@cloudbuild.gserviceaccount.com`, "roles/firebase.admin");
 });
