@@ -84,5 +84,15 @@ $ firebase deploy -P YOUR_PROJECT_ID --only firestore
 - Firestoreのセキュリティルール気をつける
 - OAuth consent screen を設定する
 
+# Cloud Functionsのデプロイ
+[functionsのREADME](/functions/README.md)に沿ってCloud Functionsをデプロイする
+
+# Dockerコンテナの起動
+タクシーの移動をエミュレートするDockerコンテナをローカルで起動する
+```
+$ docker pull gcr.io/YOUR_PROJECT_ID/pubsub-emulator
+$ docker run -d gcr.io/YOUR_PROJECT_ID/pubsub-emulator
+```
+
 # Known Issue
 - pulumiでIAM APIを有効化できない
