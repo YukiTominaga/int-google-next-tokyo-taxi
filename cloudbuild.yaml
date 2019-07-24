@@ -1,0 +1,33 @@
+steps:
+
+# Angular
+- id: 'Replace Maps APIKEY'
+  name: 'alpine'
+  dir: 'angular'
+  entrypoint: 'ash'
+  args:
+  - '-c'
+  - |
+    sed -i -e 's/APIKEY/${_APIKEY}/g' src/index.html
+
+- id: 'Package Install'
+  name: 'gcr.io/cloud-builders/yarn'
+  dir: 'angular'
+  args: ['install']
+
+- id: 'Angular Build'
+  name: 'gcr.io/cloud-builders/yarn'
+  dir: 'angular'
+  args: ['build']
+
+- id: 'Firebase Deploy'
+  name: 'devillex/docker-firebase'
+  dir: 'angular'
+  entrypoint: 'sh'
+  args:
+  - '-c'
+  - |
+    firebase -P $PROJECT_ID deploy --only hosting,firestore
+
+substitutions:
+  _APIKEY: AIzaSyCkTfZ24FSGYG4ehjd6JYqs3fZqNNITheg

@@ -39,11 +39,12 @@ nextTokyoTaxiSA.email.apply(email => {
 // Service
 const services = new gcp.projects.Services("project", {
   disableOnDestroy: false,
-  project: "ca-next-tokyo-taxi",
+  project: projectId,
   services: [
     "bigquery-json.googleapis.com",
     "cloudbuild.googleapis.com",
     "cloudfunctions.googleapis.com",
+    "compute.googleapis.com",
     "firestore.googleapis.com",
     "iam.googleapis.com",
     "identitytoolkit.googleapis.com",
@@ -58,5 +59,6 @@ services.id.apply(async id => {
   // Attach IAM role to CloudBuild serviceaccount
   const project = await gcp.organizations.getProject({ projectId: projectId });
   const projectNumber = project.number;
-  const cloudbuildKeyCreateIAM = new ProjectIAMMember("cloudbuildKeyCreator", `serviceAccount:${projectNumber}@cloudbuild.gserviceaccount.com`, "roles/iam.serviceAccountKeyAdmin");
+  new ProjectIAMMember("cloudbuildKeyCreator", `serviceAccount:${projectNumber}@cloudbuild.gserviceaccount.com`, "roles/iam.serviceAccountKeyAdmin");
+  new ProjectIAMMember("cloudbuildKeyCreator", `serviceAccount:${projectNumber}@cloudbuild.gserviceaccount.com`, "roles/firebase.admin");
 });
